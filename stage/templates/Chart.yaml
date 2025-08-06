@@ -1,5 +1,0 @@
-apiVersion: v2
-description: Prometheus
-name: event-test-dev
-version: 0.0.5361
-appVersion: 0.0.5361
