@@ -28,7 +28,7 @@ spec:
           - name: MODE
             value: "simple"
           - name: SLACK_CHANNEL_ID
-            value: C08UATC9FLN
+            value: C08UATC9FLN      #real channel in slack, please contact QA to add you to it
           - name: SLACK_TEXT
             value: |
                  *Promotion Finished!* 
