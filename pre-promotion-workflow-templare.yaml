@@ -1,0 +1,49 @@
+# DO NOT REMOVE the following attributes:
+# annotations.codefresh.io/workflow-origin (identifies type of Workflow Template as Promotion Workflow)
+# annotations.version (identifies version of Promotion Workflow used)
+# annotations.description (identifies intended use of the Promotion Workflow)
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: slack-start-promotion-tests
+  annotations:
+    codefresh.io/workflow-origin: promotion
+    version: 0.0.1
+spec:
+  serviceAccountName: cf-default-promotion-workflows-sa
+  entrypoint: send-message
+  templates:
+    - name: send-message
+      retryStrategy:
+        limit: "1"
+        retryPolicy: "Always"
+        backoff:
+          duration: "5s"
+      inputs:
+        parameters:
+          - name: MODE
+            value: "simple"
+          - name: SLACK_CHANNEL_ID
+            value: C08UJNQ7742  #real channel in slack, please contact QA to add you to it
+          - name: SLACK_TEXT
+            value: |
+                 *Promotion Started!* 
+      container:
+        name: main
+        imagePullPolicy: Always
+        image: curlimages/curl:latest
+        command:
+          - sh
+          - -c
+          - |
+            # Prepare the message payload
+            MESSAGE="{\"channel\":\"{{inputs.parameters.SLACK_CHANNEL_ID}}\",\"text\":\"{{inputs.parameters.SLACK_TEXT}}\"}"
+            echo "Sending message to Slack: $MESSAGE"  # Debugging step to view the message payload
+            curl -X POST https://slack.com/api/chat.postMessage \
+              -H "Authorization: Bearer $SLACK_TOKEN" \
+              -H "Content-Type: application/json; charset=utf-8" \
+              --data "$MESSAGE"
+        env:
+          - name: SLACK_TOKEN
+            value: "$SLACK_TOKEN" #put token here (value saved in 1password)
+              
