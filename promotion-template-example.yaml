@@ -1,1 +1,26 @@
+#add this file to your ISC repo by path /resources/configurations/promotion-templates/
 
+apiVersion: codefresh.io/v1beta1
+kind: PromotionTemplate
+metadata:
+  name: base-helm                   
+spec:
+  applicationSourceSelector:
+    matchLabels:
+      codefresh.io/product: <name_of_your_product>
+  priority: 1
+  versionSource:                   
+    file: Chart.yaml
+    jsonPath: $appVersion
+  promotion:                       
+    Chart.yaml:
+      jsonPaths:
+      - $.appVersion
+      - $.version
+      - $.dependencies
+    values.yaml:
+      jsonPaths:
+      - $..image
+    requirements.yaml:
+      jsonPaths:
+      - "$.dependencies"
