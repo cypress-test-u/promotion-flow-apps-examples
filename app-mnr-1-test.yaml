@@ -4,6 +4,8 @@ metadata:
   name: app-mnr-1-test
   finalizers:
     - resources-finalizer.argocd.argoproj.io/foreground
+  annotations:
+    codefresh.io/product: mnr-1
 spec:
   project: default
   destination:
