@@ -4,6 +4,8 @@ metadata:
   name: app-mnr-2-stage
   finalizers:
     - resources-finalizer.argocd.argoproj.io/foreground
+  annotations:
+    codefresh.io/product: mnr-2
 spec:
   project: default
   destination:
