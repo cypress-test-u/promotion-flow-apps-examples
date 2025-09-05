@@ -45,5 +45,5 @@ spec:
               --data "$MESSAGE"
         env:
           - name: SLACK_TOKEN
-            value: "$SLACK_TOKEN" #put token here (value saved in 1password)
+            value: secrets.API_KEY #put token here (value saved in 1password)
               
