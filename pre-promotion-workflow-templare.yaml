@@ -40,10 +40,10 @@ spec:
             MESSAGE="{\"channel\":\"{{inputs.parameters.SLACK_CHANNEL_ID}}\",\"text\":\"{{inputs.parameters.SLACK_TEXT}}\"}"
             echo "Sending message to Slack: $MESSAGE"  # Debugging step to view the message payload
             curl -X POST https://slack.com/api/chat.postMessage \
-              -H "Authorization: Bearer xoxb-2551826103-7547006536614-o6XDGgBswqpL5dPvi5cO7OPV" \
+              -H "Authorization: Bearer $SLACK_TOKEN" \
               -H "Content-Type: application/json; charset=utf-8" \
               --data "$MESSAGE"
         env:
           - name: SLACK_TOKEN
-            value: "$SLACK_TOKEN" #put token here (value saved in 1password)
+            value: xoxb-2551826103-7547006536614-o6XDGgBswqpL5dPvi5cO7OPV #put token here (value saved in 1password)
               
